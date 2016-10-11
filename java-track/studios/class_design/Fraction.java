@@ -10,10 +10,11 @@ public class Fraction {
 	}
 	
 	public Fraction add(Fraction frac2) {
-		int finalnum1 = this.num * (gcd(this.den, frac2.den) / this.den);
-		int finalnum2 = frac2.num * (gcd(this.den, frac2.den) / frac2.den);
+		int finalnum1 = this.num * (findGCD(this.den, frac2.den) / this.den);
+		int finalnum2 = frac2.num * (findGCD(this.den, frac2.den) / frac2.den);
 
-		int finalden = gcd(this.den, frac2.den);
+		int finalden = findGCD(this.den, frac2.den);
+		System.out.println(finalden);
 		return(new Fraction((finalnum1 + finalnum2), finalden));
 	}
 	
@@ -25,7 +26,7 @@ public class Fraction {
 	}
 	
 	public Fraction simplify() {
-		int gcd = gcd(this.num, this.den);
+		int gcd = findGCD(this.num, this.den);
 		if (gcd == 1) {
 			return (new Fraction(this.num, this.den));
 		} else {
@@ -41,12 +42,12 @@ public class Fraction {
 	}
 	
 	
-	public int gcd(int p, int q) {
-		while (q != 0) {
-            int temp = p;
-            q = p % q;
-            p = temp;
-        }
-		return (p);
+	public static int findGCD(int n1, int n2) {
+		if(n1 == 0) { 
+			return n1; 
+		} 
+		return findGCD(n2, n1%n2);
+
 	}
 }
+
