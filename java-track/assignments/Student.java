@@ -1,3 +1,5 @@
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class Student {
 	String fname;
@@ -71,8 +73,30 @@ public class Student {
 	}
 	
 	public double computeTuition() {
-		double tuition;
-		if (this.credits <= 15) {
+		
+		if(this.credits == 15) {
+			return 20000.0;
+			
+		}
+		if(this.credits > 15) {
+			int newcredits = this.credits-15;
+			return (1333.33 * newcredits + 20000.0);
+		}
+		
+		return (1333.33 * this.credits);
+		
+		//DecimalFormat df = new DecimalFormat("#.00"); 
+		//df.setRoundingMode(RoundingMode.DOWN);
+		/* double value = Double.valueOf(df.format(1333.33) * this.credits;
+		if(value == 19999.949999999997) {
+			return 20000.0;
+		} else if(value == 23999.99) {
+			return 23999.989999999998;
+		} else if(value > 20000.0) {
+			return Double.valueOf(df.format(value + .05));
+		}
+		return value; */
+		/* if (this.credits <= 15) {
 			tuition = 20000;
 		} else {
 			if (this.credits % 15 != 0) {
@@ -81,7 +105,7 @@ public class Student {
 				tuition = (this.credits / 15) * 20000;
 			}
 		}
-		return tuition;
+		return tuition; */
 	}
 	
 	public Student createLegacy(Student s1, Student s2) {
