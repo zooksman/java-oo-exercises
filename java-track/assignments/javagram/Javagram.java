@@ -6,6 +6,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import javax.swing.SpringLayout.Constraints;
+
 public class Javagram {
 
 	public static void main(String[] args) {
@@ -16,6 +18,8 @@ public class Javagram {
 		String relPath;
 		Picture picture = null;
 		Scanner in = new Scanner(System.in);
+		int fselect = 420;
+		int selection;
 		
 		// prompt user for image to filter and validate input
 		do {
@@ -40,9 +44,18 @@ public class Javagram {
 		} while(picture == null);
 		
 		// TODO - prompt user for filter and validate input
-		
+		do {
+			try {
+				fselect = displayFilterMenu(in);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				System.out.println("That is not a valid option.");
+			} catch (java.util.InputMismatchException e) {
+				System.out.println("That is not a valid option.");
+				in.next();
+			}
+		} while(fselect == 420);
 		// TODO - pass filter ID int to getFilter, and get an instance of Filter back 
-		BlueFilter filter = getFilter();			
+		Filter filter = getFilter(fselect);			
 
 		// filter and display image
 		Picture processed = filter.process(picture);
@@ -71,11 +84,32 @@ public class Javagram {
 	
 	// TODO - refactor this method to accept an int parameter, and return an instance of the Filter interface
 	// TODO - refactor this method to thrown an exception if the int doesn't correspond to a filter
-	private static BlueFilter getFilter() {
+	private static Filter getFilter(int selection) {
 		
 		// TODO - create some more filters, and add logic to return the appropriate one
-		return new BlueFilter();
+		switch (selection) {
+			case 1: return new BlueFilter();	
+			//TODO - add more filters here
+			case 2: return new RedFilter();
+			case 3: return new MysteryFilter();
+			case 4: return new SepiaFilter();
+		}
 		
+		return null;
 	}
+	
+	private static int displayFilterMenu(Scanner in) {
+		System.out.println("Please select a filter to apply.");
+		System.out.println("1. Blue");
+		System.out.println("2. Red");
+		System.out.println("3. Mystery");
+		System.out.println("4. Sepia");
+		
+		int[] options = new int[4];
+		int selection = in.nextInt();
+		int test = options[selection-1];
+		return selection;
+	}
+
 
 }
